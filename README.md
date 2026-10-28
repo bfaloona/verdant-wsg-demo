@@ -152,7 +152,7 @@ Verdant's default is the system font stack (`system-ui` for text, `ui-monospace`
    <link rel="preload" href="/assets/brand-subset.woff2" as="font" type="font/woff2" crossorigin>
    ```
 
-   Then add a token rather than hard-coding the family: `fonts.brand: "'Brand', 'Brand Fallback', system-ui, sans-serif"` in `scripts/tokens.mjs`, used only by heading styles.
+   Then add a token rather than hard-coding the family: `brand: "'Brand', 'Brand Fallback', system-ui, sans-serif"` in `fontFamilyTokens` in `packages/verdant-design/src/tokens.mjs` (the preset exposes it as `fonts.brand`), used only by heading styles.
 5. **Budget it.** Raise `thresholds.webFontsKiB` in `ci/budgets.json` in the same reviewed change, with a `rationale` entry saying why. `scripts/check-budgets.mjs` totals every `.woff2`, `.woff`, `.ttf`, `.otf` and `.eot` file in `dist/` and fails the build over the limit. As a guide, a Latin subset of one variable face is typically 20–40 KiB; stay under 30 KiB.
 6. **Respect the reader.** Under `prefers-reduced-data: reduce`, drop the web font and keep the fallback stack. It's cheap to do even though browser support is still limited.
 
@@ -192,9 +192,10 @@ See the site itself for the full decision-to-guideline mapping.
 
 ## Theme contract
 
-`scripts/theme.mjs` is the authoritative theme module. It exports:
+`packages/verdant-design/src/theme.mjs` is the authoritative theme module. It exports:
 
 - `themeTokens`, `semanticColorTokens`, `explicitThemeVars`, `themeVarName`
+- `highContrastTokens`, `highContrastVars`
 - `interfacePaletteOrder`, `illustrationPaletteOrder`, `themeTokenCount`
 - `themePreferenceStorageKey`
 - `themePreferenceControlName`
